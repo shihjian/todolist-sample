@@ -29,6 +29,9 @@ const requestListener = (req, res) => {
       })
     );
     res.end();
+  } else if (req.method == "OPTIONS") {
+    res.writeHead(200, headers);
+    res.end();
   } else if (req.url == "/todos" && req.method == "POST") {
     req.on("end", () => {
       try {
@@ -111,7 +114,12 @@ const requestListener = (req, res) => {
     });
   } else {
     res.writeHead(404, headers);
-    res.write("404 not find");
+    res.write(
+      JSON.stringify({
+        Status: "false",
+        log: "無此路由",
+      })
+    );
     res.end();
   }
 };
